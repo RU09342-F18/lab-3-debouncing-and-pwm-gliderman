@@ -1,18 +1,11 @@
-# Software Debouncing
-In previous labs, we talked about how objects such as switches can cause some nasty effects since they are actually a mechanical system at heart. We talked about the simple hardware method of debouncing, but due to the many different design constraints, you may not be able to add or adjust hardware. Debouncing is also only one of many applications which would require the use of built in Timers to allow for other processes to take place.
+# Nate Hoffman's Software Debouncing
 
-## Task
-You need to utilize the TIMER modules within the MSP430 processors to implement a debounced switch to control the state of an LED. You most likely will want to hook up your buttons on the development boards to an oscilloscope to see how much time it takes for the buttons to settle. The idea here is that your processor should be able to run other code, while relying on timers and interrupts to manage the debouncing in the background. *You should not be using polling techniques for this assignment.*
+Using timers to provide a clean button press/unpress signal to the microcontroller. Eliminates the bouncing signal from the button as it is pressed or unpressed.
 
-## Deliverables
-You will need to have two folders in this repository, one for each of the processors that you used for this part of the lab. Remember to replace this README with your own.
+## Operation
 
-### Hints
-You need to take a look at how the P1IE and P1IES registers work and how to control them within an interrupt routine. Remember that the debouncing is not going to be the main process you are going to run by the end of the lab.
+A timer running at 32.768 kHz is used to time 4 ms on the FR2311 (2 ms on the F5529) after the last button state change. Once this timer has elapsed, it reads the button state to toggle the LED. If before the timer lapsed the button state changes, the timer is reset to start the counter again. This allows the button to bounce repeatedly, but only perform an action after it settles.
 
-## Extra Work
-### Low Power Modes
-Go into the datasheets or look online for information about the low power modes of your processors and using Energy Trace, see what the lowest power consumption you can achieve while still running your debouncing code. Take a note when your processor is not driving the LED (or unplug the header connecting the LED and check) but running the interrupt routine for your debouncing.
+## Devices
 
-### Double the fun
-Can you expand your code to debounce two switches? Do you have to use two Timer peripherals to do this?
+Code was written that runs on an MSP430F5529 and MSP430FR2311. The F5529 uses an LED connected to P1.0 and a button connected to P2.1. The FR2311 uses an LED connected to P1.0 and a button connected to P1.1.
