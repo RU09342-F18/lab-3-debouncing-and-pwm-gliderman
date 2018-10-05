@@ -1,18 +1,15 @@
-# Hardware PWM
-Now that you have done the software version of PWM, now it is time to start leveraging the other features of these Timer Modules.
+# Nate Hoffman's Hardware PWM
 
-## Task
-You need to replicate the same behavior as in the software PWM, only using the Timer Modules ability to directly output to a GPIO Pin instead of managing them in software. One way to thing about what should happen is that unless your are doing some other things in your code, your system should initialize, set the Timer Modules, and then turn off the CPU.
+Using a timer to provide a pulse width modulation (PWM) signal to an LED to change it's brightness. This is the hardware implementation which can only be used on certain pins (whatever is connected to the output of the CCRs). If you were looking for a software implementation, see [here](https://github.com/RU09342-F18/lab-3-debouncing-and-pwm-gliderman/tree/master/Software%20PWM).
 
-## Deliverables
-You will need to have two folders in this repository, one for each of the processors that you used for this part of the lab. Remember to replace this README with your own.
+## Operation
 
-### Hints
-Read up on the P1SEL registers as well as look at the Timer modules ability to multiplex.
+A timer running at 1 MHz is stepped down to 250 kHz (roughly). This allows a counter running from 0-255 to loop 1000 times a second (running the PWM at 1 kHz). 8 bits provides a range of 0-255 which ties in with the timer to provide those different levels. Every time the button is pressed the duty cycle is increased by 10%. Once it passes 100% it wraps around to 0%.
 
-## Extra Work
-### Using ACLK
-Some of these microprocessors have a built in ACLK which is extremely slow compared to your up to 25MHz available on some of them. What is the overall impact on the system when using this clock? Can you actually use your PWM code with a clock that slow?
+## Devices
 
-### Ultra Low Power
-Using a combination of ACLK, Low Power Modes, and any other means you may deem necessary, optimize this PWM code to run at 50% duty cycle with a LED on the MSP430FR5994. In particular, time how long your code can run on the fully charged super capacitor. You do not need to worry about the button control in this case, and you will probably want to disable all the GPIO that you are not using (nudge, nudge, hint, hint).
+Code was written that runs on an MSP430F5529 and MSP430FR2311. The F5529 board uses two LEDs connected to P1.2 and P4.7 along with a button connected to P2.1. The FR2311 board uses two LEDs connected to P1.7 and P2.0 along with a button connected to P1.1.
+
+### Note for MSP430FR2311
+
+It should be noted that CCR1 is connected to P1.6, which was pulled high by the programming side of the board. Instead, CCR2 was used, which is connected to P1.7.
