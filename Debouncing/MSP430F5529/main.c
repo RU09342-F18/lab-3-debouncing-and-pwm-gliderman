@@ -1,9 +1,18 @@
 #include <msp430.h> 
 
-
 /**
- * main.c
+ * Author: Nate Hoffman
+ * Date: October 3, 2018
+ * Description: When the button is pressed on this board,
+ * the button can provide a noisy signal (bounce). This
+ * uses a timer to provide a low power debouncing program
+ * to remove this noise and toggle the state of an LED.
+ * The button is connected to P2.1, while the LED is
+ * connected to P1.0. A 32.768 kHz clock is used to time
+ * 2 ms after the last button state change to pull in the
+ * new button state and perform actions.
  */
+
 int main(void)
 {
     UCSCTL4 = SELA_0; // Enable ACLK (32.768 kHz signal)

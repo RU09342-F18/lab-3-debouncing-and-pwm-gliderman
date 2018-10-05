@@ -1,8 +1,16 @@
 #include <msp430.h> 
 
-
 /**
- * main.c
+ * Author: Nate Hoffman
+ * Date: October 4, 2018
+ * Software PWM
+ * Description: A PWM signal with 256 different levels at
+ * 1 kHz is generated using a timer and two CCRs. Every
+ * time the button is pressed, the PWM pulse gets 10%
+ * longer, wrapping around to 0% after 100% is reached.
+ * The button is connected to P1.1, while the PWM output
+ * is connected to an LED on P1.0. An LED on P2.0 shows
+ * the state of the button.
  */
 
 void configureLED() {

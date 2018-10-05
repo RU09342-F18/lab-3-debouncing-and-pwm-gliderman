@@ -1,9 +1,21 @@
 #include <msp430.h> 
 
-// Note about P1.6 being a RXD
-
 /**
- * main.c
+ * Author: Nate Hoffman
+ * Date: October 5, 2018
+ * Hardware PWM
+ * Description: A PWM signal with 256 different levels at
+ * 1 kHz is connected to a timer that uses two CCRs. This
+ * does not use interrupts to change the output state of
+ * the signal. Instead the output of CCR1 is connected to
+ * P1.7 on the board. A button connected to P1.1 is used
+ * to increase the duty cycle by 10% each time it is
+ * pressed, rolling over from 100% to 0%. An LED that is
+ * connected to P2.0 shows the state of the button.
+ *
+ * It should be noted that CCR1 connected to P1.6, which
+ * was pulled high by the programming side of the board.
+ * CCR2 was used instead, which is connected to P1.7.
  */
 
 void configureLED() {
