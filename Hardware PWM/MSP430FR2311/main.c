@@ -75,11 +75,7 @@ __interrupt void Port_1(void) {
     if (P1IES & BIT1) { // The button is pressed
         TB0CCR2 += 25;
         if (TB0CCR2 > 255) {
-            TB0CCR2 = 0;
-            P1OUT &= ~BIT6;
-            TB0CTL = TBCLR; // clear
-        } else {
-            TB0CTL = TBSSEL_2 + ID_2 + MC_1 + TBCLR; // SMCLK, /4, up, clear
+            TB0CCR2 = 0; // Set to 0% duty cycle
         }
     }
 

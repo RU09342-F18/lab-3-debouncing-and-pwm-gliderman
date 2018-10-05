@@ -66,12 +66,7 @@ __interrupt void Port_2(void) {
     if (P2IES & BIT1) { // The button is pressed
         TA0CCR1 += 25;
         if (TA0CCR1 > 255) {
-            TA0CCR1 = 0;
-            P1OUT &= ~BIT2;
-            P1OUT &= ~BIT0;
-            TA0CTL = TACLR; // clear
-        } else {
-            TA0CTL = TASSEL_2 + ID_2 + MC_1 + TACLR; // SMCLK, /4, up, clear
+            TA0CCR1 = 0; // Set to 0% duty cycle
         }
     }
 
