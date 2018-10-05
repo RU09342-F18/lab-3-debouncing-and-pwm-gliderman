@@ -44,7 +44,7 @@ __interrupt void Port_2(void) {
 #pragma vector=TIMER0_A1_VECTOR
 __interrupt void TIMER0_A1(void) {
     TA0CTL = TASSEL_1 + MC_0 + TACLR; // ACLK, off, clear
-    if (P2IN & BIT1) {
+    if (P2IN & BIT1) { // Button is not pressed
         P1OUT ^= BIT0;
     }
 }
